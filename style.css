@@ -494,3 +494,34 @@ screen and (max-width: 580px) {
         content: 'at https://github.com/'
     }
 }
+
+/* Calendar */
+
+.fa {
+    font-size: 0.5em;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    width: 40px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px !important;
+    font-size: 1.5em;
+}
+
+td,
+#year {
+    font-family: monospace;
+}
+
+td.day:hover { background: #dcfafc; }
+
+/* ---- */
