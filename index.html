@@ -70,13 +70,26 @@
                         <option value="2027">2027</option>
                     </select>
                     <br />
-                    Aeroporto origem:
+                    <label for="searchOrigin">Aeroporto origem:</label>
+                    <div style="display: none;">
+                        <input type="text" id="searchOrigin" style="width: 200px;">
+                        <ol id="originOptions" stype="display:inline; float:left; padding-top:50px">
+                            <li>Biarritz-Anglet- Bayonne - França</li>
+                            <li>Clermont-Ferrand Auvergne Airport - França</li>
+                            <li>Frankfurt - Alemanha</li>
+                        </ol>
+                    </div>
                     <input type="text" maxlength="3" id="originAirportCode" value="GRU" style="width: 80px;">
                     <br />
-                    Aeroporto destino:
+                    <label for="searchDestination">Aeroporto destino:</label>
+                    <div style="display: none;">
+                        <input type="text" id="searchDestination" style="width: 200px;">
+                    </div>
                     <input type="text" maxlength="3" id="destinationAirportCode" value="LIS" style="width: 80px;">
                     <br /><br />
                     <button onclick="searchFares()">Pesquisar</button>
+                    <br />
+                    <input type="checkbox" checked id="isTesting"><label for="isTesting">Local only</label>
                 </div>
                 <div>
                     <h1 class="text-center">

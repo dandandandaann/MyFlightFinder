@@ -386,9 +386,14 @@ table {
 
 th,
 td {
-    text-align: left;
     padding: 5px 10px;
-    border-bottom: 1px solid #aaa
+    border-bottom: 1px solid #aaa;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    line-height: 30px !important;
+    font-size: 1.5em;
+    vertical-align: top;
 }
 
 dt {
@@ -509,17 +514,10 @@ th {
     text-align: center;
 }
 
-td {
-    width: 200px;
-    height: 50px;
-    text-align: center;
-    line-height: 30px !important;
-    font-size: 1.5em;
-}
-
 td,
 #year {
     font-family: monospace;
+    vertical-align: middle;
 }
 
 td.day:hover {
@@ -531,9 +529,10 @@ td.day:hover {
 /* ---- */
 
 .input-settings {
-    padding: 20px 0;
+    padding: 10px 0 20px 0;
 }
 
 .miles {
     font-size: 14px;
+    line-height: 20px;
 }
