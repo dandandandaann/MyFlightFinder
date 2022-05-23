@@ -522,7 +522,11 @@ td,
     font-family: monospace;
 }
 
-td.day:hover { background: #dcfafc; }
+td.day:hover {
+    background: #006699;
+    cursor: pointer;
+    color: #eee;
+}
 
 /* ---- */
 

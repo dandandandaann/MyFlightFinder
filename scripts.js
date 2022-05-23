@@ -8,13 +8,18 @@ function ready(fn) {
 }
 ready(searchFares);
 
-function searchFares() {
-    var currentDate = new Date();
+var origin;
+var month;
+var destination;
+var year;
 
-    var origin = document.getElementById('originAirportCode').value;
-    var destination = document.getElementById('destinationAirportCode').value;
-    var month = document.getElementById('monthInput').value;
-    var year = document.getElementById('yearInput').value;
+function searchFares() {
+    origin = document.getElementById('originAirportCode').value;
+    destination = document.getElementById('destinationAirportCode').value;
+    month = document.getElementById('monthInput').value;
+    year = document.getElementById('yearInput').value;
+
+    var currentDate = new Date(year, month - 1);
 
     var url = monthlyFaresUrl(origin, destination, month, year);
 
@@ -62,6 +67,13 @@ function monthlyFaresUrl(orginAirport, destinationAirport, month, year) {
         `&departureDate=${year}-${month}-01` + // selected date
         '&adults=1&children=0&infants=0&forceCongener=false&cabin=ALL&bestFare=true&memberNumber=';
     return monthlyFareUrl;
+}
+
+function dailyFareUrl(originAirport, destinationAirport, departureDate) {
+    const dailyFareUrl = 'https://www.smiles.com.br/emissao-com-milhas?tripType=2&isFlexibleDateChecked=false&cabin=ALL&adults=1&segments=1&children=0&infants=0&searchType=congenere&segments=1' + 
+        `&originAirport=${originAirport}&destinationAirport=${destinationAirport}` + 
+        `&departureDate=${new Date(departureDate).getTime()}`;
+    return dailyFareUrl;
 }
 
 function onError(message, exception, dirObject) {
@@ -115,6 +127,7 @@ function generateCalendar(today, fares) {
                         td.appendChild(divMiles);
                     }
                     td.classList.add('day');
+                    td.setAttribute('onclick', `window.open('${dailyFareUrl(origin, destination, new Date(year, month, day))}', '_blank');`);
                     day++;
                 }
             }
