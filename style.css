@@ -500,24 +500,19 @@ screen and (max-width: 580px) {
     }
 }
 
-/* Calendar */
-
-.fa {
-    font-size: 0.5em;
-}
-
 table {
     width: 100%;
 }
 
 th {
     text-align: center;
+    vertical-align: bottom;
+    font-family: monospace;
 }
 
-td,
-#year {
+td {
     font-family: monospace;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 td.day:hover {
@@ -526,8 +521,6 @@ td.day:hover {
     color: #eee;
 }
 
-/* ---- */
-
 .input-settings {
     padding: 10px 0 20px 0;
 }
@@ -535,4 +528,20 @@ td.day:hover {
 .miles {
     font-size: 14px;
     line-height: 20px;
+}
+
+.calendar-title {
+    font-family: monospace, Tahoma, Verdana, sans-serif;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.left-arrow {
+    display: block;
+    float: left;
+}
+
+.right-arrow {
+    display: block;
+    float: right;
 }

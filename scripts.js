@@ -51,13 +51,12 @@ function searchFares(eventArg, orginAirport, destinationAirport, month, year) {
             var monthlyFares = result.calendarSegmentList[0].calendarDayList;
 
             generateCalendar(_origin, _destination, currentDate, monthlyFares);
-            addArrows(currentDate);
+            addMonthArrows(currentDate);
         })
         .catch(e => onError('Boo...\n' + e));
 }
 
 function monthlyFaresUrl(orginAirport, destinationAirport, month, year) {
-
     month = parseInt(month);
     var nextMonth = month + 1;
     var nextYear = year;
@@ -93,7 +92,6 @@ function onError(message, exception, dirObject) {
 }
 
 function generateCalendar(origin, destination, today, fares) {
-
     // TODO: move this details to somewhere else
     var details = {
         totalDays: today.monthDays(),
@@ -106,22 +104,32 @@ function generateCalendar(origin, destination, today, fares) {
         return;
     }
 
-    var monthStart = new Date(today.getFullYear(), today.getMonth()).getDay();
-    var calendarBody = document.querySelector('.calendar-table>tbody');
+    let monthStart = new Date(today.getFullYear(), today.getMonth()).getDay();
+    let calendarTable = document.querySelector('.calendar-table');
+    let calendarBody = document.querySelector('.calendar-table>tbody');
     if (calendarBody)
-        document.querySelector('.calendar-table').innerHTML = '';
+        calendarTable.innerHTML = '';
+
+    let calendarHead = document.createElement('tbody');
+    let tr = document.createElement('tr');
+    details.weekDays.map(weekDay => {
+        let td = document.createElement('th');
+        td.innerText = weekDay;
+        tr.appendChild(td);
+    });
+    calendarHead.appendChild(tr);
+    calendarTable.appendChild(calendarHead);
+
     calendarBody = document.createElement('tbody');
 
     var day = 1;
-    for (var i = 0; i <= 6; i++) {
+    for (var i = 1; i <= 6; i++) {
         if (day > details.totalDays)
             continue;
-        var tr = document.createElement('tr'); // TODO: separate header loop
+        tr = document.createElement('tr');
         for (var j = 0; j < 7; j++) {
-            var td = document.createElement('td');
-            if (i === 0) {
-                td.innerText = details.weekDays[j];
-            } else if (day > details.totalDays) {
+            let td = document.createElement('td');
+            if (day > details.totalDays) {
                 td.innerHTML = '&nbsp;';
             } else {
                 if (i === 1 && j < monthStart) {
@@ -143,7 +151,7 @@ function generateCalendar(origin, destination, today, fares) {
         }
         calendarBody.appendChild(tr);
     }
-    document.querySelector('.calendar-table').appendChild(calendarBody);
+    calendarTable.appendChild(calendarBody);
     document.getElementById('month').textContent = details.months[today.getMonth()];
     document.getElementById('year').textContent = today.getFullYear();
 }
@@ -162,7 +170,7 @@ Date.prototype.monthDays = function () {
     return d.getDate();
 };
 
-function addArrows(currentDate) {
+function addMonthArrows(currentDate) {
     document.getElementById('left').onclick = () => {
         if (currentDate.getMonth() === 0)
             currentDate = new Date(currentDate.getFullYear() - 1, 11);
