@@ -545,3 +545,7 @@ td.day:hover {
     display: block;
     float: right;
 }
+
+.best-smiles {
+    color: #ff5a00;
+}

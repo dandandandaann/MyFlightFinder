@@ -5,9 +5,18 @@ Disponível no [GitHub Pages](https://dandandandaann.github.io/MyFlightFinder/) 
 
 #### TODO list:
 
+- better error handling that doesn't halt the app
 - add dropdowns to select airports (probably use smiles search api)
 - disable request on load
 - show some 'loading...' hint in UI
 - show input errors in UI
 - hide LocalOnly checkbox when not local
 - add some delay to prevent multiple requests with small interval
+
+- ##### Figure out how to sumarize multiple requests in the calendar
+    - have an unique id for each day and update each day separately by id?
+    - make a class 'bind' it to each day?
+    - have three separate method
+        1. to request and parse the data to a common class
+        2. queue calendar updates if it's busy  
+        3. update the calendar
