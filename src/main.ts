@@ -1,3 +1,4 @@
+// @ts-expect-error
 import App from  './App.svelte';
 
 var app = new App({
