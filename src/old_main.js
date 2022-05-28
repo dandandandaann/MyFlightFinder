@@ -1,27 +1,27 @@
 import { Smiles } from "./smiles.js";
 import "./util.js";
 
-function ready(fn) {
-    if (document.readyState !== 'loading') {
-        fn();
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-ready(Main);
+// function ready(fn) {
+//     if (document.readyState !== 'loading') {
+//         fn();
+//     } else {
+//         document.addEventListener('DOMContentLoaded', fn);
+//     }
+// }
+// ready(Main);
+// Function.prototype.searchFares = searchFares;
+
+
 
 var _origin, _destination, _month, _year, _smiles;
 
-function Main() {
+export function Main() {
     loadInputValues();
 
     let selectedDate = new Date(_year, _month - 1);
     generateCalendar(selectedDate);
-
-
 }
 
-Function.prototype.searchFares = searchFares;
 
 function loadInputValues(orginAirport, destinationAirport, month, year) {
     _origin = orginAirport ?? document.getElementById('originAirportCode').value;
@@ -30,14 +30,15 @@ function loadInputValues(orginAirport, destinationAirport, month, year) {
     _year = year ?? document.getElementById('yearInput').value;
 
     let inputError = validateInput();
-    if (inputError && inputError.some(e => e)) {
-        inputError.map(error => console.warn(error)); // TODO: show error messages in UI
+    if (inputError?.some(e => e)) {
+        inputError.map(error => console.warn(error));
+        alert(inputError.join(' '));
         return false;
     }
     return true;
 }
 
-function searchFares(eventArg, orginAirport, destinationAirport, month, year) {
+export function searchFares(eventArg, orginAirport, destinationAirport, month, year) {
 
     if (!loadInputValues(orginAirport, destinationAirport, month, year))
     {
@@ -46,7 +47,7 @@ function searchFares(eventArg, orginAirport, destinationAirport, month, year) {
 
     let isTesting = false;
     if ((document.getElementById('isTesting')?.checked ?? false)
-        && ['repo', '127.0.0.1'].some(x => window.location.href.includes(x))) {
+        && ['localhost', '127.0.0.1'].some(x => window.location.href.includes(x))) {
         isTesting = true;
         console.warn('Reading from local json file');
     }

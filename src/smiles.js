@@ -3,7 +3,7 @@ import { onError, monthDays } from "./util.js";
 export class Smiles {
 
     constructor(origin, destination, month, year) {
-        this.localResultUrl = './test-result.json';
+        this.localResultUrl = './public/test-result.json';
         this._origin = origin;
         this._destination = destination;
         this._month = month;
