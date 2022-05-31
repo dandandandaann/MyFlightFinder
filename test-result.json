@@ -23,7 +23,7 @@
                 {
                     "date": "2022-10-01",
                     "isLowestPrice": false,
-                    "miles": "testing",
+                    "miles": "999999",
                     "fare": {
                         "type": "SMILES_CLUB"
                     }
