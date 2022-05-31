@@ -11,7 +11,7 @@ export class Smiles extends LoyaltyProgram {
     public searchFares(isTesting = false): void {
         let url = isTesting ? this.localResultUrl : this.monthlyFaresUrl();
 
-        let selectedDate = new Date(this._year, this._month - 1);
+        let selectedDate = new Date(this.year, this.month);
 
         fetch(url)
             .then(async response => {
@@ -36,15 +36,13 @@ export class Smiles extends LoyaltyProgram {
     }
 
     protected monthlyFaresUrl(): string {
-        let nextMonth = this._month + 1;
-        let nextYear = this._year;
+        let nextMonth = this.month + 1;
+        let nextYear = this.year;
 
-        if (this._month > 12) {
+        if (this.month > 12) {
             nextMonth = 1;
             nextYear = nextYear + 1;
         }
-
-        return;
 
         let Number = Intl.NumberFormat(
             'pt-BR',
@@ -52,17 +50,17 @@ export class Smiles extends LoyaltyProgram {
         );
 
         const monthlyFareUrl = 'https://api-air-calendar-prd.smiles.com.br/v1/airlines/calendar/month' +
-            `?originAirportCode=${this._origin}&destinationAirportCode=${this._destination}` + // airport code
-            `&startDate=${this._year}-${Number.format(this._month)}-01` +
+            `?originAirportCode=${this.origin}&destinationAirportCode=${this.destination}` + // airport code
+            `&startDate=${this.year}-${Number.format(this.month)}-01` +
             `&endDate=${nextYear}-${Number.format(nextMonth)}-01` + // start end date
-            `&departureDate=${this._year}-${Number.format(this._month)}-01` + // selected date
+            `&departureDate=${this.year}-${Number.format(this.month)}-01` + // selected date
             '&adults=1&children=0&infants=0&forceCongener=false&cabin=ALL&bestFare=true&memberNumber=';
         return monthlyFareUrl;
     }
 
     protected dailyFareUrl(urlDate) {
         const dailyFareUrl = 'https://www.smiles.com.br/emissao-com-milhas?tripType=2&isFlexibleDateChecked=false&cabin=ALL&adults=1&segments=1&children=0&infants=0&searchType=congenere&segments=1' +
-            `&originAirport=${this._origin}&destinationAirport=${this._destination}` +
+            `&originAirport=${this.origin}&destinationAirport=${this.destination}` +
             `&departureDate=${new Date(urlDate).getTime()}`;
         return dailyFareUrl;
     }

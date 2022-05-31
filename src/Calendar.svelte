@@ -5,13 +5,20 @@
     import "./util.js";
 
     onMount(async () => {
+        if (["localhost", "127.0.0.1"].some((x) => window.location.href.includes(x))){
+		    isRunningLocally = true;
+        }
+
         Main();
+
     });
 
     export let origin: string;
     export let destination: string;
     export let month: number;
     export let year: number;
+    export let isRunningLocally: boolean;
+
     let smiles: Smiles;
 
     export function Main() {
@@ -35,12 +42,7 @@
 
         let isTesting = false;
         if (
-            ((document.getElementById("isTesting") as HTMLInputElement)
-                ?.checked ??
-                false) &&
-            ["localhost", "127.0.0.1"].some((x) =>
-                window.location.href.includes(x)
-            )
+            (document.getElementById("isTesting") as HTMLInputElement) ?.checked ?? false
         ) {
             isTesting = true;
             console.warn("Reading from local json file");
@@ -93,8 +95,9 @@
                         td.id = "day" + day;
                         let divMiles = document.createElement("div");
                         let spanMiles = document.createElement("span");
+                        spanMiles.classList.add('currency');
                         let divSmiles = document.createElement("div");
-                        divSmiles.classList.add("smiles");
+                        divSmiles.classList.add("smiles", "tooltip");
                         divMiles.classList.add("miles");
 
                         divMiles.appendChild(divSmiles);

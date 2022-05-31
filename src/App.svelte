@@ -1,12 +1,14 @@
 <script lang="ts">
-	import Calendar from './Calendar.svelte';
-	import { monthList, yearList } from './util'
+	import Calendar from "./Calendar.svelte";
+	import { monthList, yearList } from "./util";
 
 	var orginAirportInput: string = "GRU";
 	var destinationAirportInput: string = "LIS";
 	var monthInput: number = 8;
 	var yearInput: number = 2022;
 	let calendar;
+	let isRunningLocally = false;
+
 </script>
 
 <div class="wrapper">
@@ -70,9 +72,10 @@
 				<br /><br />
 				<button on:click={calendar.searchFares}>Pesquisar</button>
 				<br />
-				<input type="checkbox" checked id="isTesting" />&nbsp;<label
-					for="isTesting">Local only</label
-				>
+				{#if isRunningLocally}
+					<input type="checkbox" checked id="isTesting" />&nbsp;
+					<label for="isTesting"> Local only </label>
+				{/if}
 			</div>
 
 			<Calendar
@@ -81,6 +84,7 @@
 				month={monthInput}
 				year={yearInput}
 				bind:this={calendar}
+				bind:isRunningLocally
 			/>
 		</div>
 	</section>

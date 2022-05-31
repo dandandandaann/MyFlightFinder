@@ -5,10 +5,13 @@ Disponível no [GitHub Pages](https://dandandandaann.github.io/MyFlightFinder/) 
 
 ### TODO list:
 
-- add dropdowns to select airports (probably use smiles search api)
+- re generate calendar when date change
+- fix next month arrows
+- add dropdowns to select airports (https://interline.tudoazul.com/catalog/api/v1/airport?searchAirport=Paris)
 - show some 'loading...' hint in UI
-- hide LocalOnly checkbox when not local
 - add some delay to prevent multiple requests with small interval
+- Have inputs in a separate component?
+- Save calendar in a local variable and use it to fill it
 
 - ##### Figure out how to sumarize multiple requests in the calendar
     - have an unique id for each day and update each day separately by id?
