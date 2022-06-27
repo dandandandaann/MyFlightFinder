@@ -5,13 +5,8 @@
     import "./util.js";
 
     onMount(async () => {
-        if (
-            ["localhost", "127.0.0.1"].some((x) =>
-                window.location.href.includes(x)
-            )
-        ) {
+        if (util.isRunningLocally(window.location.href))
             isRunningLocally = true;
-        }
 
         Main();
     });

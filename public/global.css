@@ -476,3 +476,7 @@ td.day:hover {
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+.input-airport {
+    width: 100%;
+}

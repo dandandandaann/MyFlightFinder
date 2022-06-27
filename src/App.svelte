@@ -2,13 +2,14 @@
 	import Calendar from "./Calendar.svelte";
 	import { monthList, yearList } from "./util";
 
+	import AirportSearchInput from "./AirportSearchInput.svelte";
+
 	var orginAirportInput: string = "GRU";
 	var destinationAirportInput: string = "LIS";
 	var monthInput: number = 8;
 	var yearInput: number = 2022;
 	let calendar;
 	let isRunningLocally = false;
-
 </script>
 
 <div class="wrapper">
@@ -46,30 +47,11 @@
 				</select>
 				<br />
 				<label for="searchOrigin">Aeroporto origem:</label>
-				<input
-					type="text"
-					maxlength="3"
-					id="originAirportCode"
-					bind:value={orginAirportInput}
-					style="width: 80px;"
-				/>
-				<br />
+				<AirportSearchInput bind:airportCode={orginAirportInput} />
 				<label for="searchDestination">Aeroporto destino:</label>
-				<div style="display: none;">
-					<input
-						type="text"
-						id="searchDestination"
-						style="width: 200px;"
-					/>
-				</div>
-				<input
-					type="text"
-					maxlength="3"
-					id="destinationAirportCode"
-					bind:value={destinationAirportInput}
-					style="width: 80px;"
-				/>
-				<br /><br />
+				<AirportSearchInput bind:airportCode={destinationAirportInput} />
+
+				<br />
 				<button on:click={calendar.searchFares}>Pesquisar</button>
 				<br />
 				{#if isRunningLocally}

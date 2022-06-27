@@ -6,7 +6,6 @@ Disponível no [GitHub Pages](https://dandandandaann.github.io/MyFlightFinder/) 
 ### TODO list:
 
 - fix next month arrows
-- add dropdowns to select airports (https://interline.tudoazul.com/catalog/api/v1/airport?searchAirport=Paris)
 - show some 'loading...' hint in UI
 - add some delay to prevent multiple requests with small interval
 - Have inputs in a separate component?

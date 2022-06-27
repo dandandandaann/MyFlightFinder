@@ -21,6 +21,10 @@ export function onError(message: string, exception?: any, dirObject?: any) {
     alert('Error: ' + message);
 }
 
+export function isRunningLocally(href: string) : boolean {
+    return ["localhost", "127.0.0.1"].some((x) => href.includes(x));
+}
+
 export let weekDays = [
     "Domingo",
     "Segunda",

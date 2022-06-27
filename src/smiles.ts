@@ -21,7 +21,7 @@ export class Smiles extends LoyaltyProgram {
             .then(result => {
                 if (result.hasCalendar == false || result.calendarStatus != 'ENABLED' || result.calendarSegmentList?.length != 1) {
                     console.dir(result);
-                    onError('Não foi possível obter dados da smiles.');
+                    onError('Smiles não retornou corretamente a consulta mensal.');
                     return;
                 }
                 console.log('Json parse ok.');
