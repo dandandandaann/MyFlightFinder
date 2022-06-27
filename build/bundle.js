@@ -493,11 +493,11 @@ var app = (function () {
             //     return;
             // }
             for (let day = 1; day <= totalDays; day++) {
+                let tdDay = document.getElementById('day' + day);
+                let divMiles = tdDay.getElementsByClassName('miles')[0];
+                let divSmiles = divMiles.getElementsByClassName('smiles')[0];
+                let spanMiles = divMiles.getElementsByClassName('currency')[0];
                 if (fares.calendarDayList[day - 1] && fares.calendarDayList[day - 1].miles) {
-                    let tdDay = document.getElementById('day' + day);
-                    let divMiles = tdDay.getElementsByClassName('miles')[0];
-                    let divSmiles = divMiles.getElementsByClassName('smiles')[0];
-                    let spanMiles = divMiles.getElementsByClassName('currency')[0];
                     let newFare = fares.calendarDayList[day - 1].miles;
                     spanMiles.innerText = 'milhas';
                     /*if (divSmiles.innerText) {
@@ -528,6 +528,10 @@ var app = (function () {
                         divSmiles.classList.add('best-smiles');
                     tdDay.setAttribute('onclick', `window.open('${this.dailyFareUrl(new Date(date.getFullYear(), date.getMonth(), day))}', 
                     '_blank');`);
+                }
+                else { // clear td
+                    spanMiles.innerText = '';
+                    divSmiles.innerText = '';
                 }
             }
         }
