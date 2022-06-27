@@ -50,7 +50,7 @@
 					type="text"
 					maxlength="3"
 					id="originAirportCode"
-					value={orginAirportInput}
+					bind:value={orginAirportInput}
 					style="width: 80px;"
 				/>
 				<br />
@@ -66,7 +66,7 @@
 					type="text"
 					maxlength="3"
 					id="destinationAirportCode"
-					value={destinationAirportInput}
+					bind:value={destinationAirportInput}
 					style="width: 80px;"
 				/>
 				<br /><br />
