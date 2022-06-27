@@ -5,12 +5,15 @@
     import "./util.js";
 
     onMount(async () => {
-        if (["localhost", "127.0.0.1"].some((x) => window.location.href.includes(x))){
-		    isRunningLocally = true;
+        if (
+            ["localhost", "127.0.0.1"].some((x) =>
+                window.location.href.includes(x)
+            )
+        ) {
+            isRunningLocally = true;
         }
 
         Main();
-
     });
 
     export let origin: string;
@@ -18,6 +21,7 @@
     export let month: number;
     export let year: number;
     export let isRunningLocally: boolean;
+    let currentSelectedDate: Date;
 
     let smiles: Smiles;
 
@@ -40,9 +44,17 @@
         selectedMonth = selectedMonth ?? month;
         selectedYear = selectedYear ?? year;
 
+        if (
+            currentSelectedDate.getFullYear() != selectedYear ||
+            currentSelectedDate.getMonth() != selectedMonth
+        )
+            generateCalendar(new Date(selectedYear, selectedMonth));
+
         let isTesting = false;
         if (
-            (document.getElementById("isTesting") as HTMLInputElement) ?.checked ?? false
+            (document.getElementById("isTesting") as HTMLInputElement)
+                ?.checked ??
+            false
         ) {
             isTesting = true;
             console.warn("Reading from local json file");
@@ -57,8 +69,9 @@
         smiles.searchFares(isTesting);
     }
 
-    function generateCalendar(selectedDate) {
-        let monthStart = new Date(
+    function generateCalendar(selectedDate: Date) {
+        currentSelectedDate = selectedDate;
+        let firstWeekday = new Date(
             selectedDate.getFullYear(),
             selectedDate.getMonth()
         ).getDay();
@@ -66,7 +79,7 @@
         let calendarBody = document.querySelector(".calendar-table>tbody");
         if (calendarBody) calendarTable.innerHTML = "";
 
-        let calendarHead = document.createElement("tbody");
+        let calendarHead = document.createElement("thead");
         let tr = document.createElement("tr");
         util.weekDays.map((weekDay) => {
             let th = document.createElement("th");
@@ -88,16 +101,17 @@
                 if (day > totalDays) {
                     td.innerHTML = "&nbsp;";
                 } else {
-                    if (i === 1 && j < monthStart) {
+                    if (i === 1 && j < firstWeekday) {
                         td.innerHTML = "&nbsp;";
                     } else {
                         td.innerText = day.toString();
                         td.id = "day" + day;
                         let divMiles = document.createElement("div");
                         let spanMiles = document.createElement("span");
-                        spanMiles.classList.add('currency');
+                        spanMiles.classList.add("currency");
                         let divSmiles = document.createElement("div");
-                        divSmiles.classList.add("smiles", "tooltip");
+                        divSmiles.classList.add("smiles");
+                        // divSmiles.classList.add("tooltip");
                         divMiles.classList.add("miles");
 
                         divMiles.appendChild(divSmiles);
@@ -114,8 +128,9 @@
         calendarTable.appendChild(calendarBody);
         document.getElementById("month").textContent =
             util.monthList[selectedDate.getMonth()].text;
-        document.getElementById("year").textContent =
-            selectedDate.getFullYear();
+        document.getElementById("year").textContent = selectedDate
+            .getFullYear()
+            .toString();
     }
 
     function addMonthArrows(currentDate) {

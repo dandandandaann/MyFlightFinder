@@ -9,10 +9,10 @@ export default abstract class LoyaltyProgram {
     // TODO: this should belongs to Calendar component
     fillCalendarFares(fares: CalendarDayFares, date) {
         let totalDays = date.monthDays();
-        if (fares.calendarDayList && fares.calendarDayList.length < totalDays) {
-            onError('Smiles não retornou tarifa para todos os dias do mês', null, fares);
-            return;
-        }
+        // if (fares.calendarDayList && fares.calendarDayList.length < totalDays) { // TODO: fix this restriction?
+        //     onError('Smiles não retornou tarifa para todos os dias do mês', null, fares);
+        //     return;
+        // }
         for (let day = 1; day <= totalDays; day++) {
             if (fares.calendarDayList[day - 1] && fares.calendarDayList[day - 1].miles) {
                 let tdDay = document.getElementById('day' + day);
@@ -23,7 +23,7 @@ export default abstract class LoyaltyProgram {
 
                 spanMiles.innerText = 'milhas';
 
-                if (divSmiles.innerText) {
+                /*if (divSmiles.innerText) {
                     let divToolTip = divMiles.querySelector('.tooltiptext') as HTMLSpanElement;
                     if (!divToolTip) {
                         divToolTip = document.createElement('div');
@@ -43,7 +43,8 @@ export default abstract class LoyaltyProgram {
                     divToolTip.appendChild(spanToolTip);
                     divToolTip.appendChild(document.createElement('br'));
                 }
-                else {
+                else */
+                {
                     divSmiles.innerText = newFare.toString();
                 }
 

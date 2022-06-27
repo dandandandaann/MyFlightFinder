@@ -44,6 +44,11 @@ export class Smiles extends LoyaltyProgram {
             nextYear = nextYear + 1;
         }
 
+        let day = 1;
+        let today = new Date();
+        if (today > new Date(this.year, this.month))
+            day = today.getDate();
+
         let Number = Intl.NumberFormat(
             'pt-BR',
             { minimumIntegerDigits: 2 }
@@ -51,9 +56,9 @@ export class Smiles extends LoyaltyProgram {
 
         const monthlyFareUrl = 'https://api-air-calendar-prd.smiles.com.br/v1/airlines/calendar/month' +
             `?originAirportCode=${this.origin}&destinationAirportCode=${this.destination}` + // airport code
-            `&startDate=${this.year}-${Number.format(this.month)}-01` +
-            `&endDate=${nextYear}-${Number.format(nextMonth)}-01` + // start end date
-            `&departureDate=${this.year}-${Number.format(this.month)}-01` + // selected date
+            `&startDate=${this.year}-${Number.format(this.month + 1)}-${Number.format(day)}` + // start date
+            `&endDate=${nextYear}-${Number.format(nextMonth + 1)}-01` + // end date
+            `&departureDate=${this.year}-${Number.format(this.month + 1)}-${today.monthDays()}` + // selected date
             '&adults=1&children=0&infants=0&forceCongener=false&cabin=ALL&bestFare=true&memberNumber=';
         return monthlyFareUrl;
     }

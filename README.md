@@ -5,6 +5,7 @@ Disponível no [GitHub Pages](https://dandandandaann.github.io/MyFlightFinder/) 
 
 ### TODO list:
 
+- fix airport inputs not being considered for second update
 - re generate calendar when date change
 - fix next month arrows
 - add dropdowns to select airports (https://interline.tudoazul.com/catalog/api/v1/airport?searchAirport=Paris)
