@@ -49,3 +49,7 @@ export let monthList = [
     { value: 11, text: "Dezembro" },
 ];
 export let yearList = [2022, 2023, 2024, 2025, 2026, 2027];
+
+export enum Program {
+    Smiles = "smiles"
+}

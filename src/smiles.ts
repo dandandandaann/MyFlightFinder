@@ -1,19 +1,18 @@
-import { onError } from "./util.js";
+import { onError, Program } from "./util.js";
 import LoyaltyProgram from './LoyaltyProgram'
+import type { CalendarDayFares } from "./Model/CalendarDayFares.js";
 
 export class Smiles extends LoyaltyProgram {
 
-    constructor(origin: string, destination: string, month: number, year: number) {
-        super(origin, destination, month, year);
+    constructor(program: Program, origin: string, destination: string, month: number, year: number) {
+        super(program, origin, destination, month, year);
     }
     localResultUrl = './test-result.json';
 
-    public searchFares(isTesting = false): void {
+    public searchFares(isTesting = false) : Promise<CalendarDayFares> {
         let url = isTesting ? this.localResultUrl : this.monthlyFaresUrl();
 
-        let selectedDate = new Date(this.year, this.month);
-
-        fetch(url)
+        return fetch(url)
             .then(async response => {
                 console.log('Http request ok.');
                 return await response.json()
@@ -28,8 +27,7 @@ export class Smiles extends LoyaltyProgram {
 
                 var monthlyFares = result.calendarSegmentList[0];
 
-                this.fillCalendarFares(monthlyFares, selectedDate);
-
+                return monthlyFares;
                 //addMonthArrows(currentDate);
             })
             .catch(e => onError('Boo...\n' + e, e));
@@ -63,7 +61,7 @@ export class Smiles extends LoyaltyProgram {
         return monthlyFareUrl;
     }
 
-    protected dailyFareUrl(urlDate) {
+    public dailyFareUrl(urlDate) {
         const dailyFareUrl = 'https://www.smiles.com.br/emissao-com-milhas?tripType=2&isFlexibleDateChecked=false&cabin=ALL&adults=1&segments=1&children=0&infants=0&searchType=congenere&segments=1' +
             `&originAirport=${this.origin}&destinationAirport=${this.destination}` +
             `&departureDate=${new Date(urlDate).getTime()}`;

@@ -2,7 +2,9 @@
     import { Smiles } from "./smiles.js";
     import { onMount } from "svelte";
     import * as util from "./util";
-    import "./util.js";
+    import { Program } from "./util";
+    import type { CalendarDayFares } from "./Model/CalendarDayFares.js";
+import type LoyaltyProgram from "./LoyaltyProgram.js";
 
     onMount(async () => {
         if (util.isRunningLocally(window.location.href))
@@ -56,12 +58,19 @@
         }
 
         smiles = new Smiles(
+            Program.Smiles,
             originAirport,
             destinationAirport,
             selectedMonth,
             selectedYear
         );
-        smiles.searchFares(isTesting);
+        smiles.searchFares(isTesting).then((monthlyFares) => {
+            fillCalendarFares(
+                monthlyFares,
+                new Date(selectedYear, selectedMonth),
+                smiles
+            );
+        });
     }
 
     function generateCalendar(selectedDate: Date) {
@@ -102,15 +111,11 @@
                         td.innerText = day.toString();
                         td.id = "day" + day;
                         let divMiles = document.createElement("div");
-                        let spanMiles = document.createElement("span");
-                        spanMiles.classList.add("currency");
                         let divSmiles = document.createElement("div");
                         divSmiles.classList.add("smiles");
-                        // divSmiles.classList.add("tooltip");
                         divMiles.classList.add("miles");
 
                         divMiles.appendChild(divSmiles);
-                        divMiles.appendChild(spanMiles);
                         td.appendChild(divMiles);
                         td.classList.add("day");
                         day++;
@@ -188,6 +193,53 @@
             }
         }
         return errorMessages;
+    }
+
+    function fillCalendarFares(
+        fares: CalendarDayFares,
+        currentDate: Date,
+        lp: LoyaltyProgram
+    ) {
+        let totalDays = currentDate.monthDays();
+        // if (fares.calendarDayList && fares.calendarDayList.length < totalDays) { // TODO: fix this restriction?
+        //     onError('Smiles não retornou tarifa para todos os dias do mês', null, fares);
+        //     return;
+        // }
+        for (let day = 1; day <= totalDays; day++) {
+            let tdDay = document.getElementById("day" + day);
+            let divMiles = tdDay.getElementsByClassName(
+                "miles"
+            )[0] as HTMLDivElement;
+            let divProgram = divMiles.getElementsByClassName(
+                lp.program
+            )[0] as HTMLDivElement;
+
+            if (
+                fares.calendarDayList[day - 1] &&
+                fares.calendarDayList[day - 1].miles
+            ) {
+                let newFare = fares.calendarDayList[day - 1].miles;
+
+                divProgram.innerText = newFare.toString();
+
+                if (fares.calendarDayList[day - 1].isLowestPrice)
+                    divProgram.classList.add("best-smiles");
+
+                tdDay.setAttribute(
+                    "onclick",
+                    `window.open('${lp.dailyFareUrl(
+                        new Date(
+                            currentDate.getFullYear(),
+                            currentDate.getMonth(),
+                            day
+                        )
+                    )}', 
+                    '_blank');`
+                );
+            } else {
+                divProgram.innerText = "";
+            }
+        }
     }
 </script>
 

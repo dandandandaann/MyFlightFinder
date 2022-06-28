@@ -28,8 +28,7 @@
 
     const optionIdentifier = "code";
     const getOptionLabel = (option) => option.code;
-    const getSelectionLabel = (option) => `${option.description}`;
-    // const getSelectionLabel = (option) => `${option.code} - ${option.name}`;
+    const getSelectionLabel = (option) => option.description;
     const loadOptions = (filterText) => getAirports(filterText);
 
     function handleSelect(event) {
@@ -50,4 +49,3 @@
     noOptionsMessage=""
     placeholder={airportCode}
 />
-<!-- bind:value={airportCode} -->
