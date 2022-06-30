@@ -4,7 +4,7 @@
     import * as util from "./util";
     import { Program } from "./util";
     import type { CalendarDayFares } from "./Model/CalendarDayFares.js";
-import type LoyaltyProgram from "./LoyaltyProgram.js";
+    import type LoyaltyProgram from "./LoyaltyProgram.js";
 
     onMount(async () => {
         if (util.isRunningLocally(window.location.href))
@@ -49,9 +49,7 @@ import type LoyaltyProgram from "./LoyaltyProgram.js";
 
         let isTesting = false;
         if (
-            (document.getElementById("isTesting") as HTMLInputElement)
-                ?.checked ??
-            false
+            (document.getElementById("isTesting") as HTMLInputElement)?.checked ?? false
         ) {
             isTesting = true;
             console.warn("Reading from local json file");
@@ -110,12 +108,21 @@ import type LoyaltyProgram from "./LoyaltyProgram.js";
                     } else {
                         td.innerText = day.toString();
                         td.id = "day" + day;
+
                         let divMiles = document.createElement("div");
-                        let divSmiles = document.createElement("div");
-                        divSmiles.classList.add("smiles");
                         divMiles.classList.add("miles");
 
-                        divMiles.appendChild(divSmiles);
+                        Object.values(Program).forEach(program => {
+                            let div = document.createElement("div");
+                            let span = document.createElement("span");
+                            let divImg = document.createElement("div");
+                            div.classList.add(program);
+
+                            div.appendChild(span);
+                            div.appendChild(divImg);
+                            divMiles.appendChild(div);
+                        });
+
                         td.appendChild(divMiles);
                         td.classList.add("day");
                         day++;
@@ -213,6 +220,8 @@ import type LoyaltyProgram from "./LoyaltyProgram.js";
             let divProgram = divMiles.getElementsByClassName(
                 lp.program
             )[0] as HTMLDivElement;
+            let spanProgram = divProgram.getElementsByTagName('span')[0];
+            let divImg = divProgram.getElementsByTagName('div')[0];
 
             if (
                 fares.calendarDayList[day - 1] &&
@@ -220,10 +229,11 @@ import type LoyaltyProgram from "./LoyaltyProgram.js";
             ) {
                 let newFare = fares.calendarDayList[day - 1].miles;
 
-                divProgram.innerText = newFare.toString();
+                spanProgram.innerText = newFare.toString();
+                divImg.classList.add(`logo-${lp.program}`, 'logo-sm')
 
                 if (fares.calendarDayList[day - 1].isLowestPrice)
-                    divProgram.classList.add("best-smiles");
+                    spanProgram.classList.add(`best-${lp.program}`);
 
                 tdDay.setAttribute(
                     "onclick",
@@ -237,7 +247,8 @@ import type LoyaltyProgram from "./LoyaltyProgram.js";
                     '_blank');`
                 );
             } else {
-                divProgram.innerText = "";
+                spanProgram.innerText = "";
+                divImg.className = "";
             }
         }
     }

@@ -51,5 +51,6 @@ export let monthList = [
 export let yearList = [2022, 2023, 2024, 2025, 2026, 2027];
 
 export enum Program {
-    Smiles = "smiles"
+    Smiles = "smiles",
+    Azul = "tudoazul"
 }

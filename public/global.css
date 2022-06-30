@@ -468,8 +468,20 @@ td.day:hover {
     max-width: 420px;
 }
 
+.logo-sm {
+    width: 30px;
+    height: 12px;
+    position: relative;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    vertical-align: middle;
+    margin-left: 2px;
+}
 .logo-smiles {
-    width: 10px;
-    height: 4px;
     background-image: url(./assets/images/logo-smiles.svg)
+}
+.logo-tudoazul {
+    background-image: url(./assets/images/logo-tudoazul.png)
 }
